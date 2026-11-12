@@ -19,12 +19,11 @@ function PersonaDetailPage() {
     queryFn: () => api.get<Persona>(`/personas/${personaId}`),
   });
 
+  // Same key and cached shape as the favorites page ({ favorites: Persona[] }); `select` derives the ids for this view.
   const { data: favorites = [] } = useQuery({
     queryKey: ["favorites"],
-    queryFn: async () => {
-      const res = await api.get<{ favorites: Persona[] }>("/favorites");
-      return res.favorites.map((p) => p.id);
-    },
+    queryFn: () => api.get<{ favorites: Persona[] }>("/favorites"),
+    select: (res) => res.favorites.map((p) => p.id),
   });
 
   const isFavorited = favorites.includes(personaId);
