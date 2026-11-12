@@ -48,6 +48,7 @@ export async function checkoutRoutes(app: FastifyInstance) {
     };
 
     db.orders.create(order);
+    db.cart.clearForUser(userId);
 
     return reply.status(201).send(order);
   });
