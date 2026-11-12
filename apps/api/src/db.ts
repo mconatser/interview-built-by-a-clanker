@@ -362,7 +362,7 @@ export const db = {
       }
 
       if (filters.minPrice !== undefined) {
-        results = results.filter((p) => p.price <= filters.minPrice!);
+        results = results.filter((p) => p.price >= filters.minPrice!);
       }
 
       if (filters.maxPrice !== undefined) {
