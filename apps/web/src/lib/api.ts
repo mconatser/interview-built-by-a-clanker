@@ -20,7 +20,8 @@ async function request<T>(
 ): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
+    // Only declare JSON when there is a body: Fastify rejects an empty body sent as application/json.
+    ...(options.body !== undefined ? { "Content-Type": "application/json" } : {}),
     ...((options.headers as Record<string, string>) ?? {}),
   };
 
