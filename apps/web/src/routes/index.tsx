@@ -39,12 +39,11 @@ function BrowsePage() {
   if (search.maxPrice) queryString.set("maxPrice", String(search.maxPrice));
   if (search.sort) queryString.set("sort", search.sort);
 
+  const qs = queryString.toString();
+  // The key includes the filters, so each filter combination is cached and fetched on its own.
   const { data: personas = [], isLoading } = useQuery({
-    queryKey: ["personas"],
-    queryFn: () => {
-      const qs = queryString.toString();
-      return api.get<Persona[]>(`/personas${qs ? `?${qs}` : ""}`);
-    },
+    queryKey: ["personas", qs],
+    queryFn: () => api.get<Persona[]>(`/personas${qs ? `?${qs}` : ""}`),
   });
 
   const updateSearch = (updates: Partial<SearchParams>) => {
