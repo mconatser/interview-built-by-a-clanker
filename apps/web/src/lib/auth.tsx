@@ -6,6 +6,7 @@ import {
   useEffect,
   type ReactNode,
 } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import type { User, AuthResponse } from "@acme/shared";
 import { api, ApiError } from "./api";
 
@@ -20,6 +21,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const queryClient = useQueryClient();
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(() =>
     localStorage.getItem("auth_token"),
@@ -53,9 +55,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const logout = useCallback(() => {
+    localStorage.removeItem("auth_token");
+    // Query keys are not per-user, so drop everything cached for the signed-out user.
+    queryClient.clear();
     setToken(null);
     setUser(null);
-  }, []);
+  }, [queryClient]);
 
   return (
     <AuthContext.Provider value={{ user, token, isLoading, login, logout }}>
