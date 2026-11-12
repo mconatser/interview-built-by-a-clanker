@@ -60,7 +60,7 @@ export function PersonaCard({ persona }: { persona: Persona }) {
           </span>
         </div>
         <p className="text-lg font-bold text-gray-900">
-          ${(persona.price * 100).toFixed(2)}
+          ${persona.price.toFixed(2)}
           <span className="text-xs font-normal text-gray-500">/mo</span>
         </p>
       </div>
