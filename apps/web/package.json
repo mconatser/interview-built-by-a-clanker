@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "typecheck": "tsc --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@acme/shared": "workspace:*",
@@ -24,6 +25,7 @@
     "tailwindcss": "^4.0.0",
     "typescript": "^5.7.0",
     "vite": "^6.0.0",
-    "@vitejs/plugin-react": "^4.3.0"
+    "@vitejs/plugin-react": "^4.3.0",
+    "@playwright/test": "^1.65.0"
   }
 }
